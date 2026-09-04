@@ -1,0 +1,194 @@
+.menu-root {
+    flex-grow: 1;
+    background-color: rgb(24, 27, 32);
+    padding: 16px;
+}
+
+.status-bar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.title {
+    font-size: 22px;
+    color: rgb(235, 238, 242);
+    -unity-font-style: bold;
+}
+
+.status {
+    font-size: 14px;
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+.status-online {
+    color: rgb(40, 200, 120);
+    background-color: rgba(40, 200, 120, 0.12);
+}
+
+.status-offline {
+    color: rgb(220, 90, 90);
+    background-color: rgba(220, 90, 90, 0.12);
+}
+
+.main-content {
+    flex-grow: 1;
+    flex-direction: row;
+}
+
+.panel {
+    flex-grow: 1;
+    flex-basis: 0;
+    background-color: rgb(32, 35, 41);
+    border-radius: 8px;
+    padding: 14px;
+    margin-right: 12px;
+}
+
+/* USS has no :last-child selector -- target the specific rightmost panel by name instead. */
+#game-panel {
+    margin-right: 0;
+}
+
+.panel-title {
+    font-size: 16px;
+    color: rgb(200, 205, 212);
+    -unity-font-style: bold;
+    margin-bottom: 8px;
+}
+
+.device-scroll, .game-scroll {
+    flex-grow: 1;
+}
+
+.device-row {
+    flex-direction: row;
+    align-items: center;
+    background-color: rgb(40, 44, 51);
+    border-radius: 6px;
+    padding: 8px;
+    margin-bottom: 6px;
+}
+
+.device-info {
+    width: 140px;
+}
+
+.device-name {
+    color: rgb(230, 233, 238);
+    -unity-font-style: bold;
+}
+
+.device-type {
+    color: rgb(150, 156, 166);
+    font-size: 11px;
+}
+
+.live-bar-bg {
+    flex-grow: 1;
+    height: 10px;
+    background-color: rgb(20, 22, 26);
+    border-radius: 5px;
+    margin: 0 10px;
+    overflow: hidden;
+}
+
+.live-bar-fill {
+    height: 100%;
+    width: 0%;
+    background-color: rgb(80, 160, 230);
+}
+
+.device-status {
+    width: 90px;
+    font-size: 11px;
+    -unity-text-align: middle-center;
+}
+
+.status-idle { color: rgb(150, 156, 166); }
+.status-calibrating { color: rgb(240, 180, 60); }
+
+.profile-controls {
+    flex-direction: row;
+    margin-top: 10px;
+}
+
+.feedback-label {
+    color: rgb(150, 156, 166);
+    font-size: 11px;
+    margin-top: 6px;
+}
+
+.secondary-btn {
+    flex-grow: 1;
+    margin-right: 6px;
+    background-color: rgb(52, 57, 66);
+    color: rgb(225, 228, 232);
+    border-radius: 6px;
+}
+
+/* USS has no :last-child selector -- target the specific rightmost button by name instead. */
+#load-profile-btn { margin-right: 0; }
+
+.small-btn {
+    flex-grow: 0;
+    width: 90px;
+    margin-left: 8px;
+}
+
+.game-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.game-card {
+    width: 200px;
+    background-color: rgb(40, 44, 51);
+    border-radius: 8px;
+    padding: 10px;
+    margin: 6px;
+    align-items: center;
+}
+
+.game-card-disabled {
+    opacity: 0.5;
+}
+
+.game-icon {
+    width: 100%;
+    height: 100px;
+    background-color: rgb(20, 22, 26);
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
+
+.game-title {
+    color: rgb(230, 233, 238);
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.game-description {
+    color: rgb(150, 156, 166);
+    font-size: 11px;
+    -unity-text-align: middle-center;
+    white-space: normal;
+    margin: 4px 0;
+}
+
+.game-reason {
+    color: rgb(240, 180, 60);
+    font-size: 10px;
+    -unity-text-align: middle-center;
+    margin-bottom: 8px;
+}
+
+.primary-btn {
+    width: 100%;
+    background-color: rgb(60, 130, 220);
+    color: white;
+    border-radius: 6px;
+    -unity-font-style: bold;
+}

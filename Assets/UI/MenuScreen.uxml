@@ -1,0 +1,36 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <Style src="MenuScreen.uss" />
+
+    <ui:VisualElement name="menu-root" class="menu-root">
+
+        <ui:VisualElement name="status-bar" class="status-bar">
+            <ui:Label name="title-label" text="Rehabilitation Platform" class="title" />
+            <ui:Label name="status-label" text="Connecting..." class="status status-offline" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="main-content" class="main-content">
+
+            <ui:VisualElement name="device-panel" class="panel">
+                <ui:Label text="Available Devices" class="panel-title" />
+
+                <ui:ScrollView name="device-scroll" class="device-scroll">
+                    <ui:VisualElement name="device-list" class="device-list" />
+                </ui:ScrollView>
+
+                <ui:VisualElement name="profile-controls" class="profile-controls">
+                    <ui:Button name="save-profile-btn" text="Save Calibration Profile" class="secondary-btn" />
+                    <ui:Button name="load-profile-btn" text="Load Calibration Profile" class="secondary-btn" />
+                </ui:VisualElement>
+                <ui:Label name="profile-feedback" text=" " class="feedback-label" />
+            </ui:VisualElement>
+
+            <ui:VisualElement name="game-panel" class="panel">
+                <ui:Label text="Select a Game" class="panel-title" />
+                <ui:ScrollView name="game-scroll" class="game-scroll">
+                    <ui:VisualElement name="game-grid" class="game-grid" />
+                </ui:ScrollView>
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

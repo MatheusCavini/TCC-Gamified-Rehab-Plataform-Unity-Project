@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:VisualElement name="device-row" class="device-row">
+        <ui:VisualElement name="device-info" class="device-info">
+            <ui:Label name="device-name" text="device_id" class="device-name" />
+            <ui:Label name="device-type" text="type" class="device-type" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="device-live-bar-bg" class="live-bar-bg">
+            <ui:VisualElement name="device-live-bar-fill" class="live-bar-fill" />
+        </ui:VisualElement>
+
+        <ui:Label name="device-status" text="Idle" class="device-status status-idle" />
+        <ui:Button name="calibrate-btn" text="Calibrate" class="secondary-btn small-btn" />
+    </ui:VisualElement>
+</ui:UXML>

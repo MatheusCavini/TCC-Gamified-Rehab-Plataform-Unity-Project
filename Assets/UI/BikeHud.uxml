@@ -1,0 +1,46 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="BikeHud.uss" />
+
+    <ui:VisualElement name="hud-root" class="hud-root" picking-mode="Ignore">
+
+        <ui:VisualElement name="top-left-box" class="hud-box hud-box-topleft">
+            <ui:Label text="ON PATH" class="hud-box-title" />
+            <ui:VisualElement name="gauge-track" class="gauge-track">
+                <ui:VisualElement class="gauge-zone gauge-zone-red" />
+                <ui:VisualElement class="gauge-zone gauge-zone-yellow" />
+                <ui:VisualElement class="gauge-zone gauge-zone-green" />
+                <ui:VisualElement name="gauge-needle" class="gauge-needle" />
+            </ui:VisualElement>
+            <ui:Label name="accuracy-value-label" text="100%" class="hud-value-small" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="top-right-box" class="hud-box hud-box-topright">
+            <ui:Label text="SPEED" class="hud-box-title" />
+            <ui:Label name="speed-label" text="0.0" class="hud-value-big" />
+            <ui:VisualElement name="balance-row" class="balance-row">
+                <ui:Label text="BALANCE" class="hud-box-title" />
+                <ui:VisualElement name="balance-track" class="gauge-track gauge-track-small">
+                    <ui:VisualElement class="gauge-zone gauge-zone-red" />
+                    <ui:VisualElement class="gauge-zone gauge-zone-yellow" />
+                    <ui:VisualElement class="gauge-zone gauge-zone-green" />
+                    <ui:VisualElement name="balance-needle" class="gauge-needle" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="heading-box" class="hud-box hud-box-heading">
+            <ui:Label text="HEADING" class="hud-box-title" />
+            <ui:VisualElement name="heading-dial" class="heading-dial">
+                <ui:VisualElement name="heading-needle" class="heading-needle" />
+            </ui:VisualElement>
+            <ui:Label name="heading-value-label" text="0°" class="hud-value-small" />
+        </ui:VisualElement>
+
+        <ui:Button name="back-to-menu-btn" text="Back to Menu" class="hud-back-btn" picking-mode="Position" />
+
+        <ui:VisualElement name="minimap-box" class="minimap-box">
+            <ui:Label text="TRACK MAP" class="minimap-title" />
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>

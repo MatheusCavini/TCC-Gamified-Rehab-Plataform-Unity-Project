@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:VisualElement name="game-card" class="game-card">
+        <ui:VisualElement name="game-icon" class="game-icon" />
+        <ui:Label name="game-title" text="Game Title" class="game-title" />
+        <ui:Label name="game-description" text="Description" class="game-description" />
+        <ui:Label name="game-reason" text="Ready" class="game-reason" />
+        <ui:Button name="play-btn" text="Play" class="primary-btn" />
+    </ui:VisualElement>
+</ui:UXML>

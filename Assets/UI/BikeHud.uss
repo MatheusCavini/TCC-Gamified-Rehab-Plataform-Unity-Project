@@ -1,0 +1,135 @@
+.hud-root {
+    flex-grow: 1;
+    padding: 16px;
+}
+
+/* ---- Pixel-art panel look ----
+   Swap the font on .hud-box-title / .hud-value-big / .hud-value-small for a
+   pixel font asset (e.g. "Press Start 2P", free on Google Fonts) via
+   -unity-font-definition once imported, to match the reference screenshot's
+   chunky text. Left as the default font here so this renders correctly
+   without requiring an extra asset import first. */
+
+.hud-box {
+    position: absolute;
+    background-color: rgba(10, 14, 20, 0.82);
+    border-width: 2px;
+    border-color: rgb(90, 100, 115);
+    border-radius: 4px;
+    padding: 8px 12px;
+    min-width: 150px;
+}
+
+.hud-box-topleft { top: 16px; left: 16px; }
+.hud-box-topright { top: 16px; right: 16px; align-items: flex-end; }
+.hud-box-heading { top: 16px; left: 50%; margin-left: -75px; align-items: center; }
+
+.hud-box-title {
+    color: rgb(150, 200, 255);
+    font-size: 11px;
+    letter-spacing: 1px;
+    -unity-font-style: bold;
+    margin-bottom: 4px;
+}
+
+.hud-value-big {
+    color: rgb(120, 230, 140);
+    font-size: 26px;
+    -unity-font-style: bold;
+}
+
+.hud-value-small {
+    color: rgb(230, 233, 238);
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+/* ---- Gauge: colored-zone bar + moving needle, stands in for a circular gauge
+   since UI Toolkit has no native arc/circle drawing. ---- */
+.gauge-track {
+    flex-direction: row;
+    width: 160px;
+    height: 14px;
+    border-radius: 7px;
+    margin-top: 4px;
+    overflow: hidden;
+    border-width: 1px;
+    border-color: rgb(20, 22, 26);
+    position: relative;
+}
+
+.gauge-track-small { width: 90px; height: 10px; }
+
+.gauge-zone { flex-grow: 1; height: 100%; }
+.gauge-zone-red { background-color: rgb(200, 70, 70); }
+.gauge-zone-yellow { background-color: rgb(210, 180, 60); }
+.gauge-zone-green { background-color: rgb(90, 190, 100); }
+
+.gauge-needle {
+    position: absolute;
+    top: -3px;
+    width: 4px;
+    height: 20px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 2px;
+    left: 50%; /* overridden per-frame in C# via style.left */
+}
+
+.balance-row {
+    margin-top: 8px;
+    align-items: flex-end;
+}
+
+/* ---- Heading dial: small circle with a rotating needle line ---- */
+.heading-dial {
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+    background-color: rgb(30, 33, 39);
+    border-width: 2px;
+    border-color: rgb(90, 100, 115);
+    align-items: center;
+    justify-content: center;
+}
+
+.heading-needle {
+    width: 3px;
+    height: 20px;
+    background-color: rgb(255, 200, 80);
+    /* rotated per-frame in C# around this element's center via style.rotate */
+}
+
+.hud-back-btn {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    background-color: rgba(52, 57, 66, 0.9);
+    color: rgb(225, 228, 232);
+    border-radius: 6px;
+    padding: 8px 16px;
+    width: 140px;
+}
+
+.minimap-box {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    width: 240px;
+    height: 240px;
+    background-color: rgb(20, 22, 26);
+    border-width: 2px;
+    border-color: rgb(90, 100, 115);
+    border-radius: 4px;
+    -unity-background-scale-mode: scale-to-fit;
+    padding: 4px;
+}
+
+.minimap-title {
+    color: rgb(150, 200, 255);
+    font-size: 10px;
+    letter-spacing: 1px;
+    -unity-font-style: bold;
+    background-color: rgba(10, 14, 20, 0.85);
+    align-self: flex-start;
+    padding: 2px 6px;
+}
