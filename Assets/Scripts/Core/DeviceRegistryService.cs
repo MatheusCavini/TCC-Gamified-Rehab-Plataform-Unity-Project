@@ -93,6 +93,8 @@ namespace HalMenu.Core
                 var state = JsonConvert.DeserializeObject<Dictionary<string, object>>(msg.data);
                 if (state == null || !state.ContainsKey("device_id")) return;
 
+                if (!state.ContainsKey("normalized_value") || state["normalized_value"] == null) return;
+
                 string deviceId = state["device_id"].ToString();
                 string unit = state.ContainsKey("unit") ? state["unit"].ToString() : "";
 
@@ -106,10 +108,16 @@ namespace HalMenu.Core
                 _channelStates[deviceId] = channelState;
                 OnChannelStateUpdated?.Invoke(channelState);
 
-                // Preserve the scalar contract used by game scripts: use the first
-                // normalized value when ROS supplies a vector.
-                float value = channelState.Values.Length > 0 ? channelState.Values[0] : 0f;
-                OnDeviceStateUpdated?.Invoke(deviceId, value, unit);
+                // Only EEG performance-metrics messages carry a live bar value;
+                // mental-command and other device_state variants do not, and
+                // should not be treated as "focus is 0" by scalar consumers.
+                if (state.TryGetValue("type", out var rawType) && rawType?.ToString() == "eeg")
+                {
+                    // Preserve the scalar contract used by game scripts: use the
+                    // first normalized value when ROS supplies a vector.
+                    float value = channelState.Values.Length > 0 ? channelState.Values[0] : 0f;
+                    OnDeviceStateUpdated?.Invoke(deviceId, value, unit);
+                }
             }
             catch (Exception e)
             {
@@ -130,12 +138,12 @@ namespace HalMenu.Core
 
         private static float[] ReadValues(Dictionary<string, object> state)
         {
-            if (!state.TryGetValue("normalized_value", out var raw) || raw == null) return Array.Empty<float>();
+            if (!state.TryGetValue("normalized_value", out var raw) || raw == null)
+                return Array.Empty<float>();
             var token = raw as Newtonsoft.Json.Linq.JToken;
             if (token is Newtonsoft.Json.Linq.JArray array) return array.ToObject<float[]>() ?? Array.Empty<float>();
             return new[] { Convert.ToSingle(raw) };
         }
-
         public bool IsCalibrating(string deviceId) => _calibrationFlags.TryGetValue(deviceId, out var v) && v;
     }
 
