@@ -5,6 +5,8 @@
             <ui:Label name="device-type" text="type" class="device-type" />
         </ui:VisualElement>
 
+        <ui:VisualElement name="channel-list" class="channel-list" />
+
         <ui:VisualElement name="device-live-bar-bg" class="live-bar-bg">
             <ui:VisualElement name="device-live-bar-fill" class="live-bar-fill" />
         </ui:VisualElement>

@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 using Unity.Robotics.ROSTCPConnector;
 using RosMessageTypes.Std; // TriggerRequest / TriggerResponse (std_srvs/Trigger)
 
@@ -51,6 +52,21 @@ namespace HalMenu.Core
             ROSConnection.GetOrCreateInstance().SendServiceMessage<SetStringResponse>(
                 toggleDeviceService, req,
                 resp => onResult?.Invoke(resp.success, resp.message));
+        }
+
+        public void ToggleCalibration(string deviceId, string channelId, Action<bool, string> onResult)
+        {
+            var payload = JsonConvert.SerializeObject(new ChannelCalibrationRequest { device_id = deviceId, channel_id = channelId });
+            var req = new SetStringRequest(payload);
+            ROSConnection.GetOrCreateInstance().SendServiceMessage<SetStringResponse>(
+                toggleDeviceService, req,
+                resp => onResult?.Invoke(resp.success, resp.message));
+        }
+
+        private sealed class ChannelCalibrationRequest
+        {
+            public string device_id;
+            public string channel_id;
         }
 
         public void SaveProfile(Action<bool, string> onResult)

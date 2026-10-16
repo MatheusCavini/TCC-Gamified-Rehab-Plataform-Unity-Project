@@ -72,6 +72,24 @@
     margin-bottom: 6px;
 }
 
+.channel-list {
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+.channel-preview {
+    flex-direction: row;
+    align-items: center;
+    min-height: 28px;
+    margin-top: 2px;
+}
+
+.channel-name {
+    width: 100px;
+    color: rgb(210, 215, 222);
+    font-size: 11px;
+}
+
 .device-info {
     width: 140px;
 }

@@ -16,6 +16,8 @@ namespace HalMenu.Core
         public string type;
         public List<string> capabilities = new List<string>();
         public List<string> units = new List<string>();
+        public List<string> channel_names = new List<string>();
+        public List<string> channel_ids = new List<string>();
 
         public override bool Equals(object obj) => obj is DeviceInfo other && other.device_id == device_id;
         public override int GetHashCode() => device_id?.GetHashCode() ?? 0;

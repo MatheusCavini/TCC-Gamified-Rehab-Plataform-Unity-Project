@@ -34,11 +34,13 @@ namespace HalMenu.Core
         public event Action<IReadOnlyList<DeviceInfo>> OnDeviceListUpdated;
         public event Action<IReadOnlyDictionary<string, bool>> OnCalibrationStateUpdated;
         public event Action<string, float, string> OnDeviceStateUpdated; // deviceId, normalizedValue, unit
+        public event Action<DeviceChannelState> OnChannelStateUpdated;
 
         private List<DeviceInfo> _devices = new List<DeviceInfo>();
         private Dictionary<string, bool> _calibrationFlags = new Dictionary<string, bool>();
         private float _lastAvailableMsgTime = -999f;
         private bool _hasReceivedAtLeastOnce;
+        private readonly Dictionary<string, DeviceChannelState> _channelStates = new Dictionary<string, DeviceChannelState>();
 
         private void Awake()
         {
@@ -94,16 +96,19 @@ namespace HalMenu.Core
                 string deviceId = state["device_id"].ToString();
                 string unit = state.ContainsKey("unit") ? state["unit"].ToString() : "";
 
-                // normalized_value is usually a scalar, but SignalProcessor.normalize()
-                // returns a list when a device has more than one channel. We only need
-                // a representative scalar for the menu's live preview bar.
-                float value;
-                var rawVal = state["normalized_value"];
-                if (rawVal is Newtonsoft.Json.Linq.JArray arr && arr.Count > 0)
-                    value = arr[0].ToObject<float>();
-                else
-                    value = Convert.ToSingle(rawVal);
+                var channelState = new DeviceChannelState
+                {
+                    DeviceId = deviceId,
+                    ChannelIds = ReadStrings(state, "channel_ids"),
+                    ChannelNames = ReadStrings(state, "channel_names"),
+                    Values = ReadValues(state)
+                };
+                _channelStates[deviceId] = channelState;
+                OnChannelStateUpdated?.Invoke(channelState);
 
+                // Preserve the scalar contract used by game scripts: use the first
+                // normalized value when ROS supplies a vector.
+                float value = channelState.Values.Length > 0 ? channelState.Values[0] : 0f;
                 OnDeviceStateUpdated?.Invoke(deviceId, value, unit);
             }
             catch (Exception e)
@@ -112,6 +117,33 @@ namespace HalMenu.Core
             }
         }
 
+        public bool TryGetLatestChannelState(string deviceId, out DeviceChannelState state) => _channelStates.TryGetValue(deviceId, out state);
+
+        private static List<string> ReadStrings(Dictionary<string, object> state, string key)
+        {
+            if (!state.TryGetValue(key, out var raw) || raw == null) return new List<string>();
+            var token = raw as Newtonsoft.Json.Linq.JToken;
+            return token is Newtonsoft.Json.Linq.JArray array
+                ? array.ToObject<List<string>>() ?? new List<string>()
+                : new List<string>();
+        }
+
+        private static float[] ReadValues(Dictionary<string, object> state)
+        {
+            if (!state.TryGetValue("normalized_value", out var raw) || raw == null) return Array.Empty<float>();
+            var token = raw as Newtonsoft.Json.Linq.JToken;
+            if (token is Newtonsoft.Json.Linq.JArray array) return array.ToObject<float[]>() ?? Array.Empty<float>();
+            return new[] { Convert.ToSingle(raw) };
+        }
+
         public bool IsCalibrating(string deviceId) => _calibrationFlags.TryGetValue(deviceId, out var v) && v;
+    }
+
+    public sealed class DeviceChannelState
+    {
+        public string DeviceId;
+        public List<string> ChannelIds = new List<string>();
+        public List<string> ChannelNames = new List<string>();
+        public float[] Values = Array.Empty<float>();
     }
 }
