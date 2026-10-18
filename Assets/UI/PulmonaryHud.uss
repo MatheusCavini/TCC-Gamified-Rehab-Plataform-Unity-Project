@@ -1,0 +1,275 @@
+/* Breathing Balloon HUD. Same visual language as BikeHud.uss (dark panels,
+   light-blue titles); swap fonts/colours here or assign a balloon sprite in the
+   PulmonaryHud component to restyle without touching code. */
+
+.pulm-root {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(20, 32, 54);
+    padding: 16px;
+}
+
+/* ---- Top bar ---- */
+.top-bar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.signal-label {
+    color: rgb(150, 200, 255);
+    font-size: 14px;
+    -unity-font-style: bold;
+}
+
+/* ---- Buttons ---- */
+.pulm-btn {
+    border-radius: 6px;
+    padding: 10px 18px;
+    min-width: 140px;
+    font-size: 15px;
+    color: rgb(240, 242, 246);
+    border-width: 0;
+}
+
+.pulm-btn-primary { background-color: rgb(52, 150, 90); }
+.pulm-btn-secondary { background-color: rgba(52, 57, 66, 0.9); }
+
+/* ---- Play area ---- */
+.play-area {
+    flex-grow: 1;
+    align-items: center;
+}
+
+.balloon-stage {
+    flex-grow: 1;
+    align-self: stretch;
+}
+
+/* Both balloons are centred in the stage and scaled around their centre from
+   C# (style.scale), so growing never triggers a layout pass. */
+.balloon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 340px;
+    height: 410px;
+    margin-left: -170px;
+    margin-top: -205px;
+    border-radius: 50%;
+}
+
+.player-balloon { background-color: rgb(92, 153, 242); }
+
+.ghost-balloon {
+    background-color: rgba(255, 255, 255, 0.07);
+    border-width: 4px;
+    border-color: rgba(255, 255, 255, 0.75);
+}
+
+.balloon-knot {
+    position: absolute;
+    left: 50%;
+    bottom: -12px;
+    width: 26px;
+    height: 26px;
+    margin-left: -13px;
+    rotate: 45deg;
+    background-color: rgb(92, 153, 242); /* recoloured from C# together with the balloon */
+}
+
+/* ---- Phase block ---- */
+.phase-block {
+    align-items: center;
+    padding-bottom: 8px;
+}
+
+.phase-label {
+    color: rgb(255, 255, 255);
+    font-size: 44px;
+    -unity-font-style: bold;
+    letter-spacing: 3px;
+}
+
+.phase-hint {
+    color: rgb(150, 200, 255);
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.phase-progress-bg {
+    width: 420px;
+    height: 12px;
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.15);
+    overflow: hidden;
+}
+
+.phase-progress-fill {
+    height: 100%;
+    width: 0;
+    background-color: rgb(150, 200, 255);
+}
+
+.phase-timer {
+    color: rgb(230, 233, 238);
+    font-size: 22px;
+    margin-top: 6px;
+}
+
+.cycle-label {
+    color: rgb(150, 200, 255);
+    font-size: 14px;
+    margin-top: 2px;
+}
+
+/* ---- Effort meter ---- */
+.effort-panel {
+    position: absolute;
+    right: 24px;
+    top: 90px;
+    bottom: 90px;
+    width: 90px;
+    align-items: center;
+    padding: 8px;
+    background-color: rgba(10, 14, 20, 0.82);
+    border-width: 2px;
+    border-color: rgb(90, 100, 115);
+    border-radius: 4px;
+}
+
+.effort-title {
+    color: rgb(150, 200, 255);
+    font-size: 11px;
+    letter-spacing: 1px;
+    -unity-font-style: bold;
+    margin-bottom: 6px;
+}
+
+.effort-track {
+    flex-grow: 1;
+    width: 34px;
+    border-radius: 6px;
+    background-color: rgb(30, 33, 39);
+    border-width: 1px;
+    border-color: rgb(20, 22, 26);
+    overflow: hidden;
+}
+
+/* Position / size of these two are driven from C# (style.bottom / style.height in %). */
+.effort-band {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 0;
+    background-color: rgba(90, 190, 100, 0.45);
+}
+
+.effort-fill {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 0;
+    height: 0;
+    border-radius: 4px;
+    background-color: rgb(255, 255, 255);
+}
+
+.effort-accuracy {
+    color: rgb(230, 233, 238);
+    font-size: 13px;
+    margin-top: 6px;
+}
+
+/* ---- Overlays ---- */
+.overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(10, 14, 20, 0.88);
+    align-items: center;
+    justify-content: center;
+}
+
+.overlay-clear { background-color: rgba(0, 0, 0, 0); }
+
+.card {
+    width: 520px;
+    padding: 28px 32px;
+    background-color: rgb(30, 36, 48);
+    border-width: 2px;
+    border-color: rgb(90, 100, 115);
+    border-radius: 8px;
+    align-items: stretch;
+}
+
+.card-title {
+    color: rgb(255, 255, 255);
+    font-size: 30px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.card-subtitle {
+    color: rgb(150, 200, 255);
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    -unity-text-align: middle-center;
+}
+
+.setting { margin-bottom: 8px; }
+.setting .unity-base-field__label {
+    min-width: 200px;
+    color: rgb(230, 233, 238);
+}
+
+.card-summary {
+    color: rgb(230, 233, 238);
+    font-size: 14px;
+    margin-top: 8px;
+    -unity-text-align: middle-center;
+    white-space: normal;
+}
+
+.card-status {
+    color: rgb(255, 200, 80);
+    font-size: 13px;
+    margin-top: 4px;
+    margin-bottom: 14px;
+    -unity-text-align: middle-center;
+}
+
+.result-big {
+    color: rgb(120, 230, 140);
+    font-size: 48px;
+    -unity-font-style: bold;
+    margin-top: 10px;
+    -unity-text-align: middle-center;
+}
+
+.button-row {
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 18px;
+}
+
+.button-row .pulm-btn { margin: 0 4px; min-width: 120px; }
+
+.countdown-caption {
+    color: rgb(150, 200, 255);
+    font-size: 24px;
+    letter-spacing: 2px;
+}
+
+.countdown-number {
+    color: rgb(255, 255, 255);
+    font-size: 140px;
+    -unity-font-style: bold;
+}

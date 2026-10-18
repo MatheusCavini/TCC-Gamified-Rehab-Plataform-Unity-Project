@@ -61,6 +61,7 @@ namespace HalMenu.Core
             {
                 case "encoder": return CapabilityType.Position;
                 case "emg": return CapabilityType.Intensity;
+                case "pulmonary": return CapabilityType.Respiratory;
                 default: return null; // e.g. "imu" - not matched to any game slot yet
             }
         }

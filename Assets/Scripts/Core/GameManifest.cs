@@ -12,7 +12,9 @@ namespace HalMenu.Core
     {
         Position,    // e.g. rotary encoder angle -> 1 DoF position channel
         Intensity,   // e.g. EMG envelope -> 1 DoF intensity/effort channel
-        Orientation  // reserved for IMU-driven games; not derived/matched yet
+        Orientation, // reserved for IMU-driven games; not derived/matched yet
+        Respiratory  // e.g. pulmonary rehab device -> 1 DoF breathing effort channel.
+                     // Keep appended LAST: manifest assets store the enum as an integer.
     }
 
     [Serializable]

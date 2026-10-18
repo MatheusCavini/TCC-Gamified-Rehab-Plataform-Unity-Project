@@ -17,5 +17,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game_BikeSineWave.unity
     guid: 124e9710431b77a808a1825b28b7b8ef
+  - enabled: 1
+    path: Assets/Scenes/Game_Pulmonary.unity
+    guid: 8fcbe9d4c72ce98bb94e8f2721b558e3
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

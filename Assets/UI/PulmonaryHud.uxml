@@ -1,0 +1,84 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="PulmonaryHud.uss" />
+
+    <ui:VisualElement name="pulm-root" class="pulm-root" picking-mode="Ignore">
+
+        <!-- ================= Top bar ================= -->
+        <ui:VisualElement name="top-bar" class="top-bar">
+            <ui:Button name="back-to-menu-btn" text="Back to Menu" class="pulm-btn pulm-btn-secondary" />
+            <ui:Label name="signal-label" text="" class="signal-label" />
+            <ui:Button name="stop-btn" text="Stop" class="pulm-btn pulm-btn-secondary" />
+        </ui:VisualElement>
+
+        <!-- ================= Play area ================= -->
+        <ui:VisualElement name="play-area" class="play-area" picking-mode="Ignore">
+            <ui:VisualElement name="balloon-stage" class="balloon-stage" picking-mode="Ignore">
+                <ui:VisualElement name="balloon" class="balloon player-balloon" picking-mode="Ignore">
+                    <ui:VisualElement name="balloon-knot" class="balloon-knot" picking-mode="Ignore" />
+                </ui:VisualElement>
+                <!-- Drawn after the player's balloon so the guide outline stays visible even when the balloon is bigger. -->
+                <ui:VisualElement name="ghost-balloon" class="balloon ghost-balloon" picking-mode="Ignore" />
+            </ui:VisualElement>
+
+            <ui:VisualElement name="phase-block" class="phase-block" picking-mode="Ignore">
+                <ui:Label name="phase-label" text="" class="phase-label" />
+                <ui:Label name="phase-hint-label" text="" class="phase-hint" />
+                <ui:VisualElement class="phase-progress-bg">
+                    <ui:VisualElement name="phase-progress-fill" class="phase-progress-fill" />
+                </ui:VisualElement>
+                <ui:Label name="phase-timer-label" text="" class="phase-timer" />
+                <ui:Label name="cycle-label" text="" class="cycle-label" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- ================= Effort meter (patient vs guide) ================= -->
+        <ui:VisualElement name="effort-panel" class="effort-panel" picking-mode="Ignore">
+            <ui:Label text="EFFORT" class="effort-title" />
+            <ui:VisualElement name="effort-track" class="effort-track">
+                <ui:VisualElement name="effort-band" class="effort-band" />
+                <ui:VisualElement name="effort-fill" class="effort-fill" />
+            </ui:VisualElement>
+            <ui:Label name="accuracy-label" text="" class="effort-accuracy" />
+        </ui:VisualElement>
+
+        <!-- ================= Setup overlay (therapist) ================= -->
+        <ui:VisualElement name="setup-overlay" class="overlay">
+            <ui:VisualElement class="card">
+                <ui:Label text="Breathing Balloon" class="card-title" />
+                <ui:Label text="Therapist settings" class="card-subtitle" />
+
+                <ui:Slider name="inflate-slider" label="Inflate (blow) seconds" low-value="1" high-value="20" value="4" show-input-field="true" class="setting" />
+                <ui:Slider name="deflate-slider" label="Deflate (relax) seconds" low-value="1" high-value="20" value="4" show-input-field="true" class="setting" />
+                <ui:SliderInt name="cycles-slider" label="Cycles" low-value="1" high-value="20" value="5" show-input-field="true" class="setting" />
+                <ui:SliderInt name="target-slider" label="Target effort (%)" low-value="20" high-value="100" value="80" show-input-field="true" class="setting" />
+
+                <ui:Label name="setup-summary-label" text="" class="card-summary" />
+                <ui:Label name="setup-status-label" text="" class="card-status" />
+
+                <ui:Button name="start-btn" text="Start" class="pulm-btn pulm-btn-primary" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- ================= Countdown overlay ================= -->
+        <ui:VisualElement name="countdown-overlay" class="overlay overlay-clear" picking-mode="Ignore">
+            <ui:Label text="Get ready" class="countdown-caption" picking-mode="Ignore" />
+            <ui:Label name="countdown-label" text="3" class="countdown-number" picking-mode="Ignore" />
+        </ui:VisualElement>
+
+        <!-- ================= Results overlay ================= -->
+        <ui:VisualElement name="results-overlay" class="overlay">
+            <ui:VisualElement class="card">
+                <ui:Label text="Well done!" class="card-title" />
+                <ui:Label name="result-cycles-label" text="" class="card-summary" />
+                <ui:Label name="result-accuracy-label" text="" class="result-big" />
+                <ui:Label name="result-inband-label" text="" class="card-summary" />
+                <ui:VisualElement class="button-row">
+                    <ui:Button name="retry-btn" text="Again" class="pulm-btn pulm-btn-primary" />
+                    <ui:Button name="adjust-btn" text="Adjust settings" class="pulm-btn pulm-btn-secondary" />
+                    <ui:Button name="results-menu-btn" text="Back to Menu" class="pulm-btn pulm-btn-secondary" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>

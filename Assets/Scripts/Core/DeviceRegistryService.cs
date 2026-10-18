@@ -108,10 +108,14 @@ namespace HalMenu.Core
                 _channelStates[deviceId] = channelState;
                 OnChannelStateUpdated?.Invoke(channelState);
 
-                // Only EEG performance-metrics messages carry a live bar value;
-                // mental-command and other device_state variants do not, and
-                // should not be treated as "focus is 0" by scalar consumers.
-                if (state.TryGetValue("type", out var rawType) && rawType?.ToString() == "eeg")
+                // Scalar consumers (menu live bars, Bike steering, Pulmonary) get a
+                // single 0-1 value for EEG focus and for any single-value device
+                // (encoder, pulmonary, ...). EEG mental-command messages and
+                // multi-channel devices (EMG) are not scalars and are excluded.
+                state.TryGetValue("type", out var rawType);
+                string deviceType = rawType?.ToString();
+                bool isScalarDevice = deviceType != "eeg_mental_command" && channelState.Values.Length == 1;
+                if (deviceType == "eeg" || isScalarDevice)
                 {
                     // Preserve the scalar contract used by game scripts: use the
                     // first normalized value when ROS supplies a vector.
