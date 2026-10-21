@@ -351,7 +351,8 @@ namespace HalMenu.Games.Pulmonary
                     phase_duration = PhaseDuration,
                     level = Level01,
                     target = Target01,
-                    in_band = InBand
+                    in_band = InBand,
+                    control_mode = GameSessionService.Instance?.ActiveSession?.ControlMode ?? "assisted"
                 };
                 ros.Publish(gameStateTopic, new StringMsg(JsonConvert.SerializeObject(statePayload)));
             }

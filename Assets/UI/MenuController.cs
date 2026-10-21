@@ -18,6 +18,9 @@ namespace HalMenu.UI
         private VisualElement _gameGrid;
         private Label _statusLabel;
         private Label _profileFeedback;
+        private Label _modeFeedback;
+        private Button _assistedModeButton;
+        private Button _resistiveModeButton;
 
         private readonly Dictionary<string, VisualElement> _deviceRows = new Dictionary<string, VisualElement>();
         private readonly Dictionary<string, List<ChannelPreview>> _channelPreviews = new Dictionary<string, List<ChannelPreview>>();
@@ -35,6 +38,12 @@ namespace HalMenu.UI
             _gameGrid = _root.Q<VisualElement>("game-grid");
             _statusLabel = _root.Q<Label>("status-label");
             _profileFeedback = _root.Q<Label>("profile-feedback");
+            _modeFeedback = _root.Q<Label>("mode-feedback");
+            _assistedModeButton = _root.Q<Button>("assisted-mode-btn");
+            _resistiveModeButton = _root.Q<Button>("resistive-mode-btn");
+            _assistedModeButton.clicked += () => SelectControlMode("assisted");
+            _resistiveModeButton.clicked += () => SelectControlMode("resistive");
+            RefreshControlModeButtons();
 
             _root.Q<Button>("save-profile-btn").clicked += HandleSaveProfile;
             _root.Q<Button>("load-profile-btn").clicked += HandleLoadProfile;
@@ -265,6 +274,23 @@ namespace HalMenu.UI
         // ---------------------------------------------------------------
         // Games
         // ---------------------------------------------------------------
+        private void SelectControlMode(string mode)
+        {
+            if (GameSessionService.Instance == null) return;
+            GameSessionService.Instance.SelectControlMode(mode);
+            _modeFeedback.text = " ";
+            RefreshControlModeButtons();
+        }
+
+        private void RefreshControlModeButtons()
+        {
+            string selected = GameSessionService.Instance != null
+                ? GameSessionService.Instance.SelectedControlMode
+                : "assisted";
+            _assistedModeButton?.EnableInClassList("mode-btn-selected", selected == "assisted");
+            _resistiveModeButton?.EnableInClassList("mode-btn-selected", selected == "resistive");
+        }
+
         private void RebuildGameGrid(List<GameAvailability> availability)
         {
             _gameGrid.Clear();
@@ -284,7 +310,12 @@ namespace HalMenu.UI
                 var gameEntry = entry; // capture for closure
                 playBtn.clicked += () =>
                 {
-                    GameSessionService.Instance.BeginSession(gameEntry);
+                    _modeFeedback.text = " ";
+                    if (GameSessionService.Instance == null || !GameSessionService.Instance.BeginSession(gameEntry))
+                    {
+                        _modeFeedback.text = "HAL offline. Reconnect before starting the game.";
+                        return;
+                    }
                     SceneLoader.Instance.LoadGame(gameEntry.manifest.sceneName);
                 };
 

@@ -26,6 +26,12 @@
 
             <ui:VisualElement name="game-panel" class="panel">
                 <ui:Label text="Select a Game" class="panel-title" />
+                <ui:Label text="Rehabilitation mode" class="mode-title" />
+                <ui:VisualElement name="mode-selection" class="mode-selection">
+                    <ui:Button name="assisted-mode-btn" text="Assistivo" class="mode-btn mode-btn-selected" />
+                    <ui:Button name="resistive-mode-btn" text="Resistivo" class="mode-btn" />
+                </ui:VisualElement>
+                <ui:Label name="mode-feedback" text=" " class="feedback-label" />
                 <ui:ScrollView name="game-scroll" class="game-scroll">
                     <ui:VisualElement name="game-grid" class="game-grid" />
                 </ui:ScrollView>

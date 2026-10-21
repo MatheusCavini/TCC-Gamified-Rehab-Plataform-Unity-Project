@@ -226,7 +226,8 @@ namespace HalMenu.Games.Bike
                 path_heading_deg = PathHeadingDeg,
                 heading_error_deg = HeadingErrorDeg,
                 steer_angle_deg = SteerAngleDeg,
-                speed = CurrentSpeed
+                speed = CurrentSpeed,
+                control_mode = GameSessionService.Instance?.ActiveSession?.ControlMode ?? "assisted"
             };
             ROSConnection.GetOrCreateInstance().Publish(gameStateTopic,
                 new StringMsg(JsonConvert.SerializeObject(statePayload)));

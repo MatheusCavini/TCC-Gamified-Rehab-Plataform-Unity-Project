@@ -59,6 +59,33 @@
     margin-bottom: 8px;
 }
 
+.mode-title {
+    color: rgb(200, 205, 212);
+    font-size: 13px;
+    margin-top: 4px;
+    margin-bottom: 5px;
+}
+
+.mode-selection {
+    flex-direction: row;
+}
+
+.mode-btn {
+    flex-grow: 1;
+    margin-right: 6px;
+    background-color: rgb(52, 57, 66);
+    color: rgb(225, 228, 232);
+    border-radius: 6px;
+}
+
+#resistive-mode-btn { margin-right: 0; }
+
+.mode-btn-selected {
+    background-color: rgb(60, 130, 220);
+    color: white;
+    -unity-font-style: bold;
+}
+
 .device-scroll, .game-scroll {
     flex-grow: 1;
 }

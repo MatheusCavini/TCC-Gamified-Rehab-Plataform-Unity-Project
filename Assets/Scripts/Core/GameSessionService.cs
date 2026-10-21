@@ -1,4 +1,7 @@
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using RosMessageTypes.Std;
+using Unity.Robotics.ROSTCPConnector;
 using UnityEngine;
 
 namespace HalMenu.Core
@@ -6,6 +9,7 @@ namespace HalMenu.Core
     public class GameSession
     {
         public string GameId;
+        public string ControlMode;
         public Dictionary<CapabilityType, List<string>> DeviceIds;
 
         public List<string> Get(CapabilityType type) =>
@@ -26,6 +30,7 @@ namespace HalMenu.Core
         public static GameSessionService Instance { get; private set; }
 
         public GameSession ActiveSession { get; private set; }
+        public string SelectedControlMode { get; private set; } = "assisted";
 
         private void Awake()
         {
@@ -34,13 +39,36 @@ namespace HalMenu.Core
             DontDestroyOnLoad(gameObject);
         }
 
-        public void BeginSession(GameAvailability availability)
+        public void SelectControlMode(string mode)
         {
+            if (mode == "assisted" || mode == "resistive")
+                SelectedControlMode = mode;
+        }
+
+        public bool BeginSession(GameAvailability availability)
+        {
+            if (availability.manifest == null ||
+                DeviceRegistryService.Instance == null || !DeviceRegistryService.Instance.IsHalOnline)
+                return false;
+
+            var ros = ROSConnection.GetOrCreateInstance();
+            if (ros == null || ros.HasConnectionError) return false;
+
+            // Send the selected mode on the existing state topic before switching scenes.
+            ros.RegisterPublisher<StringMsg>("/game/state");
+            ros.Publish("/game/state", new StringMsg(JsonConvert.SerializeObject(new
+            {
+                game_id = availability.manifest.gameId,
+                control_mode = SelectedControlMode
+            })));
+
             ActiveSession = new GameSession
             {
                 GameId = availability.manifest.gameId,
-                DeviceIds = availability.assignedDeviceIds
+                DeviceIds = availability.assignedDeviceIds,
+                ControlMode = SelectedControlMode
             };
+            return true;
         }
 
         public void EndSession() => ActiveSession = null;
