@@ -203,6 +203,7 @@ namespace HalMenu.Games.Pulmonary
             Target01 = deflateTarget;
             CountdownRemaining = Mathf.Max(0f, countdownSeconds);
             State = CountdownRemaining > 0f ? PulmonaryState.Countdown : PulmonaryState.Running;
+            GameSessionService.Instance?.StartRecording();
         }
 
         public void ReturnToSetup()

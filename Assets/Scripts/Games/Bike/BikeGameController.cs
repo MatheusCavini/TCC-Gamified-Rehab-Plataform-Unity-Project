@@ -118,6 +118,7 @@ namespace HalMenu.Games.Bike
             var ros = ROSConnection.GetOrCreateInstance();
             ros.RegisterPublisher<StringMsg>(gameStateTopic);
             ros.RegisterPublisher<StringMsg>(gameMetricsTopic);
+            GameSessionService.Instance?.StartRecording();
         }
 
         private void OnDestroy()
