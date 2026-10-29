@@ -25,7 +25,14 @@ namespace HalMenu.Core
 
         private void Start()
         {
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+            // The Windows build can prepare Docker/USB before the therapist sees
+            // the game menu. Other targets retain the previous direct-menu flow.
+            var launcher = gameObject.AddComponent<SystemLauncherController>();
+            launcher.Initialize(LoadMenu);
+#else
             LoadMenu();
+#endif
         }
 
         public void LoadMenu() => SwapContentScene(MenuSceneName);
